@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> FAITH-QUIZ - Quiz Biblique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff1493, #ff69b4, #ffb6c1);
+            min-height: 100vh;
+            color: #8b0000;
+            overflow-x: hidden;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 15px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Interface de début */
+        .start-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+            border: 4px solid #ffd700;
+            margin: auto;
+            width: 100%;
+            max-width: 600px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3); }
+            to { box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4); }
+        }
+
+        .logo {
+            font-size: 3.5em;
+            color: #ff1493;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 #ffd700;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #8b0000;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #ffd700;
+            background: linear-gradient(45deg, #ff1493, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .creator-info {
+            background: linear-gradient(135deg, #fffacd, #ffd700);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 3px solid #ff1493;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.2);
+        }
+
+        .creator-info h2 {
+            color: #8b0000;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .creator-info p {
+            margin: 8px 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1em;
+            border-radius: 40px;
+            cursor: pointer;
+            margin: 12px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(255, 20, 147, 0.4);
+            border: 2px solid #ffd700;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+            width: auto;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.6);
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+        }
+
+        /* Interface nom joueur */
+        .name-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+            border: 4px solid #ffd700;
+            margin: auto;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .bible-image {
+            width: 140px;
+            height: 180px;
+            background: linear-gradient(135deg, #8b0000, #b22222);
+            margin: 20px auto;
+            border-radius: 12px;
+            position: relative;
+            border: 6px solid #f8d407;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .bible-image::before {
+            content: "📖";
+            font-size: 4em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 2px 2px 0 rgba(250, 234, 7, 0.3);
+        }
+
+        .input-field {
+            width: 100%;
+            max-width: 300px;
+            padding: 14px;
+            font-size: 1.1em;
+            border: 3px solid #ff1493;
+            border-radius: 25px;
+            margin: 20px 0;
+            text-align: center;
+            outline: none;
+            background: #fffacd;
+            color: #8b0000;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 20, 147, 0.3);
+        }
+
+        .input-field:focus {
+            border-color: #ffd700;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Interface choix niveau */
+        .level-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+            border: 4px solid #ffd700;
+            margin: auto;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .player-name {
+            font-size: 1.8em;
+            color: #ff1493;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #ffd700;
+            line-height: 1.2;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .level-btn {
+            background: linear-gradient(135deg, #ff69b4, #ffd700);
+            color: #8b0000;
+            border: none;
+            padding: 20px 15px;
+            font-size: 1.1em;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(255, 105, 180, 0.3);
+            border: 2px solid #ff1493;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .level-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5);
+            background: linear-gradient(135deg, #ffd700, #ff69b4);
+        }
+
+        .level-btn.facile { background: linear-gradient(135deg, #90ee90, #ffd700); }
+        .level-btn.moyen { background: linear-gradient(135deg, #87ceeb, #ffd700); }
+        .level-btn.difficile { background: linear-gradient(135deg, #ffa500, #ffd700); }
+        .level-btn.expert { background: linear-gradient(135deg, #ff4500, #ffd700); }
+        .level-btn.special { background: linear-gradient(135deg, #8a2be2, #ffd700); }
+
+        /* Interface jeu */
+        .game-screen {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 25px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+            border: 4px solid #ffd700;
+            margin: auto;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ffd700;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .score-display {
+            font-size: 1.4em;
+            color: #ff1493;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #ffd700;
+        }
+
+        .level-display {
+            font-size: 1.2em;
+            color: #8b0000;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #fffacd;
+            border: 2px solid #ff1493;
+        }
+
+        .timer-display {
+            font-size: 1.2em;
+            color: #ff1493;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #fffacd;
+            border: 2px solid #ff1493;
+            animation: pulse 1s infinite;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #fffacd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 2px solid #ff1493;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff1493, #ff69b4, #ffd700);
+            border-radius: 8px;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px rgba(255, 20, 147, 0.4);
+        }
+
+        .question-container {
+            margin: 25px 0;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            color: #8b0000;
+            background: #fffacd;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.25);
+            text-align: center;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .option-btn {
+            background: linear-gradient(135deg, #fffacd, #ffffff);
+            border: 3px solid #ff69b4;
+            padding: 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1em;
+            font-weight: bold;
+            color: #8b0000;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.25);
+        }
+
+        .option-btn:hover {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            transform: translateX(8px) scale(1.01);
+            border-color: #ffd700;
+            box-shadow: 0 6px 18px rgba(255, 20, 147, 0.35);
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(135deg, #90ee90, #32cd32);
+            border-color: #228b22;
+            color: #006400;
+            transform: scale(1.02);
+        }
+
+        .option-btn.incorrect {
+            background: linear-gradient(135deg, #ffb6c1, #dc143c);
+            border-color: #b22222;
+            color: #8b0000;
+            transform: scale(0.98);
+        }
+
+        /* Footer amélioré */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px 10px;
+            font-size: 0.9em;
+            color: #8b0000;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #ffd700;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            border: 2px solid #ffd700;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .footer-icon {
+            font-size: 1.2em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Responsive amélioré */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                min-height: calc(100vh - 60px);
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .logo {
+                font-size: 3em;
+            }
+            
+            .level-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .level-btn {
+                min-height: 80px;
+                padding: 15px 10px;
+                font-size: 1em;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            
+            .question-text {
+                font-size: 1.1em;
+                padding: 15px;
+            }
+            
+            .option-btn {
+                padding: 14px;
+                font-size: 0.95em;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1em;
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .input-field {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.7em;
+            }
+            
+            .logo {
+                font-size: 2.5em;
+            }
+            
+            .player-name {
+                font-size: 1.5em;
+            }
+            
+            .creator-info {
+                padding: 15px;
+            }
+            
+            .creator-info h2 {
+                font-size: 1.2em;
+            }
+            
+            .footer {
+                font-size: 0.8em;
+                padding: 12px 8px;
+            }
+        }
+
+        /* Écran de résultats */
+        .results-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+            border: 4px solid #ffd700;
+            margin: auto;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .results-title {
+            font-size: 2.2em;
+            color: #ff1493;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0 #ffd700;
+        }
+
+        .final-score {
+            font-size: 3.5em;
+            color: #8b0000;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 3px 3px 0 #ffd700;
+            background: linear-gradient(45deg, #ff1493, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .results-message {
+            font-size: 1.2em;
+            margin: 20px 0;
+            line-height: 1.5;
+            padding: 20px;
+            border-radius: 15px;
+            background: #fffacd;
+            border: 2px solid #ff1493;
+            box-shadow: 0 6px 15px rgba(255, 20, 147, 0.2);
+        }
+
+        .encouragement {
+            background: linear-gradient(135deg, #ffb6c1, #fffacd);
+            border-color: #dc143c;
+            color: #8b0000;
+        }
+
+        .celebration {
+            background: linear-gradient(135deg, #90ee90, #fffacd);
+            border-color: #228b22;
+            color: #006400;
+        }
+
+        /* Message de blâme */
+        .blame-message {
+            background: linear-gradient(135deg, #ffa500, #fffacd);
+            border: 3px solid #ff4500;
+            color: #8b0000;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-weight: bold;
+            animation: shake 0.4s ease-in-out;
+            font-size: 1em;
+        }
+
+        /* Écran Game Over */
+        .game-over-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+            border: 4px solid #ff4500;
+            margin: auto;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .game-over-title {
+            font-size: 2.5em;
+            color: #ff4500;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0 #ffd700;
+        }
+
+        .game-over-message {
+            font-size: 1.3em;
+            margin: 20px 0;
+            line-height: 1.5;
+            padding: 20px;
+            border-radius: 15px;
+            background: #fffacd;
+            border: 2px solid #ff4500;
+            box-shadow: 0 6px 15px rgba(255, 69, 0, 0.3);
+            color: #8b0000;
+            font-weight: bold;
+        }
+
+        img{
+            border-radius: 20px;
+            width: 275px;
+            height: 139px;
+            border: 3px solid  #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Interface 1: Écran de début -->
+        <div id="startScreen" class="start-screen fade-in">
+            <div class="logo"><img src="images/images (4).jpg" alt=""></div>
+            <h1 class="title"> THE FAITH-QUIZ </h1>
+            <div class="creator-info">
+                <h2>À Propos de Ce Jeu</h2>
+                <p><strong style="color: #ff1493;">Créé par :</strong> YANNICK PRODUCTION</p>
+                <p><strong style="color: #ff1493;">Objectif :</strong> Renvoyer à l'étude et la méditation de la Parole de Dieu</p>
+                <p><strong style="color: #ff1493;">Mission :</strong> Promouvoir la connaissance des Écritures et obéir à la volonté de Dieu</p>
+            </div>
+            <button class="btn pulse" onclick="showNameScreen()"> Commencer le Quiz</button>
+        </div>
+
+        <!-- Interface 2: Saisie du nom -->
+        <div id="nameScreen" class="name-screen" style="display: none;">
+            <h1 class="title"> THE FAITH-QUIZ </h1>
+            <div class="bible-image"></div>
+            <p style="font-size: 1.1em; color: #8b0000; margin: 15px 0;"> Veillez entrez votre nom pour commencer</p>
+            <input type="text" id="playerName" class="input-field" placeholder="Votre nom..." maxlength="20">
+            <br>
+            <button class="btn" onclick="validateName()"> Continuer</button>
+        </div>
+
+        <!-- Interface 3: Choix du niveau -->
+        <div id="levelScreen" class="level-screen" style="display: none;">
+            <h1 class="title"> THE FAITH-QUIZ </h1>
+            <div class="player-name" id="displayPlayerName"></div>
+            <p style="font-size: 1.2em; color: #8b0000; margin-bottom: 15px;">Choisissez votre niveau :</p>
+            <div class="level-grid">
+                <button class="level-btn facile" onclick="startGame('facile')">
+                     FACILE<br><small>2 points par réponse<br>3 minutes<br>20 Questions</small>
+                </button>
+                <button class="level-btn moyen" onclick="startGame('moyen')">
+                     MOYEN<br><small>3 points par réponse<br>4 minutes<br>20 Questions</small>
+                </button>
+                <button class="level-btn difficile" onclick="startGame('difficile')">
+                     DIFFICILE<br><small>4 points par réponse<br>6 minutes<br>20 Questions</small>
+                </button>
+                <button class="level-btn expert" onclick="startGame('expert')">
+                     EXPERT<br><small>5 points par réponse<br>5 minutes<br>20 Questions</small>
+                </button>
+                <button class="level-btn special" onclick="startGame('special')">
+                     SPÉCIAL<br><small>6 points par réponse<br>6 minutes<br>20 Questions</small>
+                </button>
+            </div>
+        </div>
+
+        <!-- Interface 4: Jeu -->
+        <div id="gameScreen" class="game-screen" style="display: none;">
+            <div class="game-header">
+                <div class="score-display">Score: <span id="currentScore">0</span></div>
+                <div class="level-display" id="currentLevel"></div>
+                <div class="timer-display" id="timerDisplay">03:00</div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-text" id="questionText"></div>
+                <div class="options-grid" id="optionsGrid"></div>
+            </div>
+            
+            <button class="btn" id="nextBtn" style="display: none;" onclick="nextQuestion()"> Question Suivante</button>
+        </div>
+
+        <!-- Interface 5: Résultats -->
+        <div id="resultsScreen" class="results-screen" style="display: none;">
+            <h1 class="results-title">Quiz Terminé !</h1>
+            <div class="player-name" id="resultsPlayerName"></div>
+            <div class="final-score" id="finalScore">0</div>
+            <div id="blameMessage" class="blame-message" style="display: none;"></div>
+            <div class="results-message" id="resultsMessage"></div>
+            <button class="btn pulse" onclick="restartGame()"> Recommencer</button>
+        </div>
+
+        <!-- Interface 6: Game Over -->
+        <div id="gameOverScreen" class="game-over-screen" style="display: none;">
+            <h1 class="game-over-title">GAME OVER</h1>
+            <div class="player-name" id="gameOverPlayerName"></div>
+            <div class="game-over-message">
+                Temps écoulé; veillez prendre en compte le temps qui vous ai reservés et sur tout Allez encore bien lire votre Bible !
+            </div>
+            <div class="final-score" id="gameOverScore">0</div>
+            <button class="btn pulse" onclick="restartGame()"> Recommencer</button>
+        </div>
+    </div>
+
+    <!-- Footer centré et stylisé -->
+    <div class="footer fade-in">
+        <div class="footer-content">
+            <span class="footer-icon"></span>
+            Product by YANNICK PRODUCTION
+            <span class="footer-icon"></span>
+        </div>
+    </div>
+
+    <!-- Sons pour chaque niveau -->
+    <audio id="soundFacile" src="musique/gospel-free-beat-213043.mp3"></audio>
+    <audio id="soundMoyen" src="musique/artist - 9 purifie nos coeurs.mp3"></audio>
+    <audio id="soundDifficile" src="musique/E11sublime II-agneau.mp3"></audio>
+    <audio id="soundExpert" src="musique/jesus-regne-287699.mp3"></audio>
+    <audio id="soundSpecial" src="musique/emmy-tunes-the-call_prod_life-g-166381.mp3"></audio>
+    <audio id="soundCorrect" src=""></audio>
+    <audio id="soundIncorrect" src=""></audio>
+    <audio id="soundWin" src=""></audio>
+    <audio id="soundLose" src=""></audio>
+
+    <script>
+        // Variables globales
+        let playerName = '';
+        let currentLevel = '';
+        let currentScore = 0;
+        let currentQuestion = 0;
+        let questions = [];
+        let pointsPerAnswer = 0;
+        let timer;
+        let timeLeft;
+
+        // Temps par niveau (en secondes)
+        const timeMap = {
+            'facile': 180,   // 3 minutes
+            'moyen': 240,    // 4 minutes
+            'difficile': 360, // 6 minutes
+            'expert': 300,   // 5 minutes
+            'special': 360   // 6 minutes
+        };
+
+        // Base de données des questions (20 questions par niveau)
+        const questionDatabase = {
+            facile: [
+                { question: "Il est écrit : 'Au commencement, Dieu créa...'", options: ["La lumière", "Les cieux et la terre", "L'homme"], correct: 1 },
+                { question: "Il est écrit : 'Où est le roi des Juifs qui vient de naître ?' Cette question concerne :", options: [ "Bethléem","Nazareth", "Jérusalem"], correct: 0 },
+                { question: "Il est écrit : 'Car Dieu a tant aimé le monde...'", options: ["Qu'Il a envoyé les prophètes", "Qu'Il a créé l'univers", "Qu'Il a donné son Fils unique"], correct: 2 },
+                { question: "Il est écrit : 'Tu ne tueras point.' Ce commandement se trouve dans :", options: ["Le livre des Proverbes", "Le livre de l'Exode", "L'évangile de Matthieu"], correct: 1 },
+                { question: "Il est écrit : 'L'Éternel est mon berger.' Cette affirmation se trouve dans :", options: ["Ésaïe", "Le Psaume 23", "L'évangile de Jean"], correct: 1 },
+                { question: "Il est écrit : 'Jésus parcourait toute la Galilée, enseignant dans les synagogues.' Cette activité est rapportée dans :", options: ["L'évangile de Matthieu", "Les Actes des Apôtres", "L'épître aux Hébreux"], correct: 0 },
+                { question: "Il est écrit : 'Moïse fit partir Israël de la mer Rouge.' Ce voyage conduit vers :", options: ["Le mont Sinaï", "Le désert de Shur", "Le Jourdain"], correct: 1 },
+                { question: "Il est écrit : 'Paul, serviteur de Jésus-Christ, appelé à être apôtre.' Cette introduction ouvre :", options: ["L'épître aux Romains", "La première épître aux Corinthiens", "L'épître aux Galates"], correct: 0 },
+                { question: "Il est écrit : 'Au commencement était la Parole, et la Parole était avec Dieu.' Ce verset célèbre ouvre :", options: ["La Genèse", "L'Apocalypse", "L'évangile de Jean"], correct: 2 },
+                { question: "Il est écrit : 'Crains Dieu et observe ses commandements.' Cette conclusion se trouve dans :", options: ["L'Ecclésiaste", "Les Proverbes", "Le Lévitique"], correct: 0 },
+                { question: "Il est écrit : 'Ne vous y trompez pas : Dieu ne se laisse pas moquer.' Cet avertissement se trouve dans :", options: ["L'épître aux Galates", "L'épître de Jacques", "La première épître aux Corinthiens"], correct: 0 },
+                { question: "Il est écrit : 'Jésus appela les petits enfants et dit : Laissez-les venir à moi.' Cet événement se trouve dans :", options: [ "L'évangile de Luc seulement","L'évangile de Marc", "L'évangile de Jean seulement"], correct: 1 },
+                { question: "Il est écrit : 'Je suis le pain de vie.' Cette déclaration de Jésus se trouve dans :", options: ["Le sermon sur la montagne", "L'évangile de Jean", "La dernière cène"], correct: 1 },
+                { question: "Il est écrit : 'Noé construisit une arche.' Cette histoire se trouve dans :", options: ["L'Exode", "Le Lévitique", "La Genèse"], correct: 2 },
+                { question: "Il est écrit : 'David vainquit Goliath.' Ce récit se trouve dans :", options: ["Le premier livre de Samuel", "Le deuxième livre des Rois", "Les Chroniques"], correct: 0 },
+                { question: "Il est écrit : 'Jésus fut tenté dans le désert.' Cet événement est raconté dans :", options: ["Les évangiles synoptiques", "L'évangile de Jean seulement", "Les Actes des Apôtres"], correct: 0 },
+                { question: "Il est écrit : 'Aimez-vous les uns les autres.' Ce commandement est répété dans :", options: [ "Les épîtres de Paul seulement","Les épîtres de Jean", "L'Ancien Testament seulement"], correct: 1 },
+                { question: "Il est écrit : 'Pierre nia Jésus trois fois.' Cette prophétie s'accomplit dans :", options: ["Les quatre évangiles", "Matthieu et Marc seulement", "Luc et Jean seulement"], correct: 0 },
+                { question: "Il est écrit : 'Je prépare une place pour vous.' Cette promesse de Jésus se trouve dans :", options: ["L'évangile de Jean", "L'évangile de Matthieu", "L'Apocalypse"], correct: 0 },
+                { question: "Il est écrit : 'Faites ceci en mémoire de moi.' Cette institution se trouve dans :", options: ["L'évangile de Jean", "Les Actes des Apôtres","Les évangiles synoptiques"], correct: 2 }
+
+            ],
+            moyen: [
+                { question: "Il est écrit : 'Mais il était blessé pour nos péchés.' Ce verset annonce :", options: ["La souffrance de Job", "La mort sacrificielle du Messie", "La persécution de l'Église"], correct: 1 },
+                { question: "Il est écrit : 'Car je connais les projets que j'ai formés sur vous.' Cette promesse est donnée :", options: ["Pendant l'exode", "Après la résurrection","Avant l'exil à Babylone"], correct: 2 },
+                { question: "Il est écrit : 'Je puis tout par celui qui me fortifie.' L'auteur de cette déclaration est :", options: ["Pierre", "Paul", "Jean"], correct: 1 },
+                { question: "Il est écrit : 'Si quelqu'un est en Christ, il est une nouvelle création.' Ce verset enseigne :", options: ["La réincarnation", "La régénération", "La résurrection"], correct: 1 },
+                { question: "Il est écrit : 'Heureux les pauvres en esprit, car le royaume des cieux est à eux.' Cette béatitude ouvre :", options: ["Le sermon sur la montagne", "Les paraboles du royaume", "Le discours sur la montagne des oliviers"], correct: 0 },
+                { question: "Il est écrit : 'Venez à moi, vous tous qui êtes fatigués et chargés.' Cette invitation se trouve dans :", options: ["Matthieu 11:28", "Luc 15:7","Marc 10:45"], correct: 2 },
+                { question: "Il est écrit : 'Car le salaire du péché, c'est la mort.' Cette sentence se trouve dans :", options: ["L'Ancien Testament", "L'épître aux Romains", "L'épître de Jacques"], correct: 1 },
+                { question: "Il est écrit : 'Supportez-vous les uns les autres.' Cet enseignement pratique se trouve dans :", options: ["L'épître aux Colossiens", "La première épître de Pierre", "L'épître aux Galates"], correct: 0 },
+                { question: "Il est écrit : 'Examinez toutes choses.' Cette exhortation à la prudence se trouve dans :", options: ["La première épître aux Thessaloniciens", "La seconde épître à Timothée", "L'épître aux Hébreux"], correct: 0 },
+                { question: "Il est écrit : 'Soyez sobres, veillez.' Cet avertissement se trouve dans :", options: ["La première épître de Jean", "La première épître de Pierre", "L'épître de Jude"], correct: 1 },
+                { question: "Il est écrit : 'Maris, aimez vos femmes.' Cet enseignement conjugal se trouve dans :", options: ["L'épître aux Éphésiens", "La première épître aux Corinthiens", "L'épître aux Colossiens"], correct: 0 },
+                { question: "Il est écrit : 'La foi est une ferme assurance.' Cette définition se trouve dans :", options: ["L'épître de Jacques", "L'épître aux Romains","L'épître aux Hébreux"], correct: 2 },
+                { question: "Il est écrit : 'Soumettez-vous à Dieu.' Cet ordre se trouve dans :", options: ["L'épître de Jacques", "La première épître de Pierre", "L'épître aux Romains"], correct: 0 },
+                { question: "Il est écrit : 'Je suis le cep, vous êtes les sarments.' Cette image se trouve dans :", options: ["L'évangile de Jean", "Les paraboles de Matthieu", "Les Actes des Apôtres"], correct: 0 },
+                { question: "Il est écrit : 'Cherchez premièrement le royaume de Dieu.' Cette priorité est donnée dans :", options: [ "L'évangile de Luc","L'évangile de Matthieu", "L'évangile de Marc"], correct: 1 },
+                { question: "Il est écrit : 'Quiconque s'élève sera abaissé.' Ce principe se trouve dans :", options: ["Les évangiles de Matthieu et Luc", "L'évangile de Marc seulement", "L'épître de Jacques"], correct: 0 },
+                { question: "Il est écrit : 'Sans la sanctification, personne ne verra le Seigneur.' Cet enseignement se trouve dans :", options: ["L'épître aux Hébreux", "La première épître aux Thessaloniciens", "La première épître de Pierre"], correct: 0 },
+                { question: "Il est écrit : 'Dieu est amour.' Cette affirmation centrale se trouve dans :", options: ["L'évangile de Jean", "L'épître aux Romains","La première épître de Jean"], correct: 2 },
+                { question: "Il est écrit : 'Le fruit de l'Esprit est...' Cette liste se trouve dans :", options: ["L'épître aux Galates", "L'épître aux Éphésiens", "La première épître aux Corinthiens"], correct: 0 },
+                { question: "Il est écrit : 'Revêtez-vous de l'armure de Dieu.' Cette image militaire se trouve dans :", options: ["L'épître aux Hébreux","L'épître aux Éphésiens", "La première épître aux Thessaloniciens"], correct: 1 }
+            ],
+            difficile: [
+                { question: "Il est écrit : 'Car la parole de Dieu est vivante et efficace.' Cette description se trouve dans :", options: ["L'épître aux Hébreux", "L'évangile de Jean", "L'Apocalypse"], correct: 0 },
+                { question: "Il est écrit : 'Je suis l'alpha et l'oméga.' Cette déclaration est attribuée à :", options: ["L'apôtre Jean", "Dieu le Père", "Jésus-Christ"], correct: 2 },
+                { question: "Il est écrit : 'Vous êtes une race élue, un sacerdoce royal.' Cette affirmation concerne :", options: ["Les lévites", "Les croyants en Christ", "Les apôtres"], correct: 1 },
+                { question: "Il est écrit : 'C'est ici la persévérance des saints.' Cette déclaration se trouve dans :", options: ["Le livre de Daniel", "L'Apocalypse de Jean", "L'épître de Jacques"], correct: 1 },
+                { question: "Il est écrit : 'Quiconque invoquera le nom du Seigneur sera sauvé.' Cette prophétie de Joël est citée dans :", options: ["Le livre des Actes", "L'épître aux Romains", "La première épître de Pierre"], correct: 0 },
+                { question: "Il est écrit : 'La création attend avec un ardent désir la révélation des fils de Dieu.' Cette espérance se trouve dans :", options: ["L'épître aux Romains", "La première épître aux Corinthiens", "L'épître aux Colossiens"], correct: 0 },
+                { question: "Il est écrit : 'Je suis le Dieu d'Abraham, le Dieu d'Isaac, et le Dieu de Jacob.' Jésus utilise cette citation pour prouver :", options: ["L'unité de Dieu", "La résurrection des morts", "L'élection d'Israël"], correct: 1 },
+                { question: "Il est écrit : 'Le juste vivra par la foi.' Cette déclaration capitale se trouve à la fois dans :", options: ["Ésaïe et Galates", "Jérémie et Hébreux","Habacuc et Romains"], correct: 2 },
+                { question: "Il est écrit : 'Vous avez été approchés de la montagne de Sion.' Cette approche spirituelle est décrite dans :", options: ["L'épître aux Hébreux", "L'épître aux Galates", "L'épître aux Éphésiens"], correct: 0 },
+                { question: "Il est écrit : 'C'est par la foi qu'Abraham offrit Isaac.' Cet acte d'obéissance est cité dans :", options: ["La Genèse seulement", "L'épître aux Hébreux", "L'épître de Jacques"], correct: 1 },
+                { question: "Il est écrit : 'Melchisédek, roi de Salem.' Ce personnage mystérieux est expliqué dans :", options: ["L'épître aux Hébreux", "L'épître aux Romains", "La Genèse seulement"], correct: 0 },
+                { question: "Il est écrit : 'Christ est le chef de tout homme.' Cet enseignement sur l'ordre divin se trouve dans :", options: ["La première épître aux Corinthiens", "L'épître aux Éphésiens", "L'épître aux Colossiens"], correct: 0 },
+                { question: "Il est écrit : 'Le mystère caché dès les siècles.' Cette révélation progressive est développée dans :", options: ["L'épître aux Colossiens", "L'épître aux Hébreux","L'épître aux Éphésiens"], correct: 2 },
+                { question: "Il est écrit : 'Vous êtes le corps de Christ.' Cette image ecclésiologique se trouve dans :", options: ["La première épître aux Corinthiens", "L'épître aux Romains", "L'épître aux Éphésiens"], correct: 0 },
+                { question: "Il est écrit : 'L'amour de Christ nous presse.' Cette motivation apostolique se trouve dans :", options: [ "L'épître aux Galates","La seconde épître aux Corinthiens", "L'épître aux Philippiens"], correct: 1 },
+                { question: "Il est écrit : 'Toute l'Écriture est inspirée de Dieu.' Cette affirmation se trouve dans :", options: ["La seconde épître à Timothée", "La seconde épître de Pierre", "L'épître aux Hébreux"], correct: 0 },
+                { question: "Il est écrit : 'La cité qui a de solides fondements.' Cette image de la vie éternelle se trouve dans :", options: ["L'Apocalypse", "La première épître de Pierre","L'épître aux Hébreux"], correct: 2 },
+                { question: "Il est écrit : 'Les dons variés de la grâce.' Cette diversité dans l'unité est décrite dans :", options: ["L'épître aux Romains", "L'épître aux Éphésiens","La première épître aux Corinthiens"], correct: 2 },
+                { question: "Il est écrit : 'L'esprit d'un esprit timide.' Cet avertissement à Timothée se trouve dans :", options: ["La seconde épître à Timothée", "La première épître à Timothée", "L'épître à Tite"], correct: 0 },
+                { question: "Il est écrit : 'La couronne de justice.' Cette récompense eschatologique est mentionnée dans :", options: ["La première épître de Pierre", "L'épître de Jacques","La seconde épître à Timothée"], correct: 2 }
+            ],
+            expert: [
+                { question: "Il est écrit : 'Je mettrai inimitié entre toi et la femme, entre ta postérité et sa postérité.' Cette prophétie se trouve dans :", options: ["Genèse 3:15", "Ésaïe 7:14", "Michée 5:1"], correct: 0 },
+                { question: "Il est écrit : 'Voici, la jeune fille deviendra enceinte.' Cette prophétie messianique est dans :", options: ["Jérémie", "Ésaïe", "Ézéchiel"], correct: 1 },
+                { question: "Il est écrit : 'Et toi, Bethléhem, terre de Juda, tu n'es pas la moindre entre les principales villes de Juda.' Cette citation précise :", options: ["Le lieu de naissance de David", "Le lieu de naissance du Messie", "Le lieu du temple"], correct: 1 },
+                { question: "Il est écrit : 'Ils ont percé mes mains et mes pieds.' Cette prophétie du Psaume 22 s'accomplit dans :", options: ["La persécution de David", "La crucifixion de Jésus", "Le martyre des prophètes"], correct: 1 },
+                { question: "Il est écrit : 'Mon Dieu, mon Dieu, pourquoi m'as-tu abandonné ?' Cette parole de Jésus accomplit :", options: ["Le Psaume 22", "Le Psaume 23", "Le Psaume 91"], correct: 0 },
+                { question: "Il est écrit : 'Ils se sont partagé mes vêtements, et ils ont tiré au sort ma tunique.' Cet événement accompli lors de la crucifixion était prophétisé dans :", options: ["Ésaïe 53", "Le Psaume 22", "Zacharie 11"], correct: 1 },
+                { question: "Il est écrit : 'Ils m'ont donné pour ma nourriture du fiel, et dans ma soif, ils m'ont abreuvé de vinaigre.' Cette prophétie du Psaume 69 s'accomplit quand :", options: ["Jésus est sur la croix", "David fuit Saül", "Jérémie est en prison"], correct: 0 },
+                { question: "Il est écrit : 'Il a été enlevé par l'angoisse, et par un jugement opprimé.' Cette description d'Ésaïe 53 concerne :", options: ["Le prophète Jérémie", "Le serviteur souffrant", "Le peuple d'Israël"], correct: 1 },
+                { question: "Il est écrit : 'Voici, ton roi vient à toi, monté sur un âne.' Cette prophétie de Zacharie s'accomplit lors de :", options: ["L'entrée triomphale à Jérusalem", "La fuite en Égypte", "Le retour de l'exil"], correct: 0 },
+                { question: "Il est écrit : 'Ils ont regardé celui qu'ils ont percé.' Cette prophétie de Zacharie est accomplie quand :", options: ["Jésus est percé par la lance", "Étienne est lapidé", "Le temple est détruit"], correct: 0 },
+                { question: "Il est écrit : 'D'Egypte, j'ai appelé mon fils.' Cette prophétie d'Osée s'accomplit quand :", options: ["Moïse fait sortir Israël d'Egypte", "Joseph est vendu en Egypte","Jésus revient d'Egypte"], correct: 2 },
+                { question: "Il est écrit : 'Un cri s'est fait entendre à Rama.' Cette prophétie de Jérémie s'accomplit lors du :", options: ["Massacre des innocents", "Jugement de Babylone", "Retour d'exil"], correct: 0 },
+                { question: "Il est écrit : 'Il sera appelé Nazaréen.' Cette prophétie s'accomplit quand Jésus :", options: ["Prêche à Nazareth", "Est rejeté à Nazareth","Grandit à Nazareth"], correct: 2 },
+                { question: "Il est écrit : 'Ils lui ont donné un sépulcre avec les méchants.' Cette prophétie d'Ésaïe s'accomplit quand Jésus est :", options: ["Enterré dans le tombeau de Joseph d'Arimathée", "Crucifié entre deux brigands", "Trahi par Judas"], correct: 0 },
+                { question: "Il est écrit : 'Aucun de ses os ne sera brisé.' Cette prophétie du Psaume 34 s'accomplit lors de :", options: ["La crucifixion de Jésus", "La passion de David", "Le sacrifice pascal"], correct: 0 },
+                { question: "Il est écrit : 'Le sceptre ne s'éloignera pas de Juda.' Cette prophétie de Genèse s'accomplit par :", options: ["Le règne de Salomon","La lignée messianique", "La tribu royale"], correct: 1 },
+                { question: "Il est écrit : 'Tu ne permettras pas que ton saint voie la corruption.' Cette prophétie du Psaume 16 concerne :", options: ["La résurrection de Jésus", "La préservation de David", "La protection des justes"], correct: 0 },
+                { question: "Il est écrit : 'Ils pesèrent pour mon salaire trente sicles d'argent.' Cette prophétie de Zacharie s'accomplit par :", options: ["Le salaire de Joseph","Le prix de la trahison de Judas", "Le tribut du temple"], correct: 1 },
+                { question: "Il est écrit : 'Le soleil deviendra obscur.' Cette prophétie d'Ésaïe s'accomplit lors de :", options: ["La crucifixion de Jésus", "Le jugement de Babylone", "La destruction de Jérusalem"], correct: 0 },
+                { question: "Il est écrit : 'Il a paru une étoile en Jacob.' Cette prophétie de Nombres trouve son accomplissement dans :", options: ["La naissance de Jean-Baptiste", "La transfiguration","La visite des mages"], correct: 2 }
+            ],
+            special: [
+                { question: "Il est écrit : 'D'Egypte, j'ai appelé mon fils.' Cette prophétie d'Osée s'accomplit quand :", options: ["Jésus revient d'Egypte", "Moïse fait sortir Israël d'Egypte", "Joseph est vendu en Egypte"], correct: 0 },
+                { question: "Il est écrit : 'Un cri s'est fait entendre à Rama.' Cette prophétie de Jérémie s'accomplit lors du :", options: [ "Jugement de Babylone", "Retour d'exil","Massacre des innocents"], correct: 2 },
+                { question: "Il est écrit : 'Il sera appelé Nazaréen.' Cette prophétie s'accomplit quand Jésus :", options: ["Prêche à Nazareth","Grandit à Nazareth", "Est rejeté à Nazareth"], correct: 1 },
+                { question: "Il est écrit : 'Ils lui ont donné un sépulcre avec les méchants.' Cette prophétie d'Ésaïe s'accomplit quand Jésus est :", options: ["Enterré dans le tombeau de Joseph d'Arimathée", "Crucifié entre deux brigands", "Trahi par Judas"], correct: 0 },
+                { question: "Il est écrit : 'Aucun de ses os ne sera brisé.' Cette prophétie du Psaume 34 s'accomplit lors de :", options: ["La crucifixion de Jésus", "La passion de David", "Le sacrifice pascal"], correct: 0 },
+                { question: "Il est écrit : 'Ils ont tiré au sort mes vêtements.' Cette prophétie du Psaume 22 est accomplie par :", options: ["Les disciples de Jésus", "Les soldats romains", "Les pharisiens"], correct: 1 },
+                { question: "Il est écrit : 'Le sceptre ne s'éloignera pas de Juda.' Cette prophétie de Genèse s'accomplit par :", options: ["La tribu royale", "Le règne de Salomon", "La lignée messianique"], correct: 2 },
+                { question: "Il est écrit : 'Tu ne permettras pas que ton saint voie la corruption.' Cette prophétie du Psaume 16 concerne :", options: ["La résurrection de Jésus", "La préservation de David", "La protection des justes"], correct: 0 },
+                { question: "Il est écrit : 'Ils pesèrent pour mon salaire trente sicles d'argent.' Cette prophétie de Zacharie s'accomplit par :", options: [ "Le salaire de Joseph","Le prix de la trahison de Judas", "Le tribut du temple"], correct: 1 },
+                { question: "Il est écrit : 'Ils lui ont présenté du vinaigre.' Cette prophétie du Psaume 69 s'accomplit quand :", options: ["Jésus a soif sur la croix", "David est dans le désert", "Samson lutte contre les Philistins"], correct: 0 },
+                { question: "Il est écrit : 'Le soleil deviendra obscur.' Cette prophétie d'Ésaïe s'accomplit lors de :", options: ["La crucifixion de Jésus", "Le jugement de Babylone", "La destruction de Jérusalem"], correct: 0 },
+                { question: "Il est écrit : 'Il a paru une étoile en Jacob.' Cette prophétie de Nombres trouve son accomplissement dans :", options: ["La transfiguration", "La naissance de Jean-Baptiste", "La visite des mages"], correct: 2 },
+                { question: "Il est écrit : 'Je frapperai le berger.' Cette prophétie de Zacharie s'accomplit lors de :", options: ["L'arrestation de Jésus", "La mort de Jean-Baptiste", "La persécution des apôtres"], correct: 0 },
+                { question: "Il est écrit : 'Ils haïssent sans cause.' Cette prophétie du Psaume 35 s'accomplit dans :", options: ["Le rejet de Jésus par les Juifs", "La persécution de David", "Le martyre des prophètes"], correct: 0 },
+                { question: "Il est écrit : 'Ils m'ont rendu le mal pour le bien.' Cette prophétie du Psaume 35 s'accomplit quand :", options: ["David est poursuivi par Saül","Jésus est trahi par Judas", "Jérémie est emprisonné"], correct: 1 },
+                { question: "Il est écrit : 'Ils secouent la tête en disant : Il s'est confié en l'Éternel.' Cette moquerie prophétisée dans le Psaume 22 s'accomplit quand :", options: ["Jésus est sur la croix", "David fuit ses ennemis", "Jérémie prêche la destruction"], correct: 0 },
+                { question: "Il est écrit : 'Ils ont compté tous mes os.' Cette prophétie du Psaume 22 s'accomplit lors de :", options: ["La crucifixion de Jésus", "La torture de David", "Le martyre des croyants"], correct: 0 },
+                { question: "Il est écrit : 'Mon cœur est comme de la cire.' Cette description du Psaume 22 s'accomplit dans :", options: ["L'angoisse de Jérémie", "La détresse de David", "La mort de Jésus sur la croix"], correct: 2 },
+                { question: "Il est écrit : 'Ils partagent mes vêtements.' Cette prophétie du Psaume 22 est citée dans :", options: ["L'évangile de Jean", "L'évangile de Matthieu seulement", "L'évangile de Luc seulement"], correct: 0 },
+                { question: "Il est écrit : 'Tu m'as fait sortir du sein maternel.' Cette prière du Psaume 22 trouve son accomplissement parfait en :", options: ["La délivrance du peuple d'Israël", "David sauvé de ses ennemis", "Jésus confiant son esprit au Père" ], correct: 2 }
+            ]
+        };
+
+        //Nombre de points par niveau
+        const pointsMap = {
+            'facile': 2,
+            'moyen': 3,
+            'difficile': 4,
+            'expert': 5,
+            'special': 6
+        };
+
+        // Sons et prédéfinis et choisis par niveau
+        const levelSounds = {
+            'facile': 'soundFacile',
+            'moyen': 'soundMoyen', 
+            'difficile': 'soundDifficile',
+            'expert': 'soundExpert',
+            'special': 'soundSpecial'
+        };
+
+        // Fonctions de navigation
+        function showNameScreen() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('nameScreen').style.display = 'block';
+        }
+
+        function validateName() {
+            const nameInput = document.getElementById('playerName');
+            playerName = nameInput.value.trim();
+            
+            if (playerName === '') {
+                alert('Veuillez entrer votre nom');
+                return;
+            }
+            
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('levelScreen').style.display = 'block';
+            document.getElementById('displayPlayerName').textContent = `Nous vous souhaitons la Bienvenue, ${playerName} !`;
+        }
+
+        function startGame(level) {
+            currentLevel = level;
+            questions = [...questionDatabase[level]];
+            pointsPerAnswer = pointsMap[level];
+            currentScore = 0;
+            currentQuestion = 0;
+            
+            // Mélanger les questions de la base de donnée par niveau chaqu'après un tour de jeu
+            shuffleArray(questions);
+            
+            document.getElementById('levelScreen').style.display = 'none';
+            document.getElementById('gameScreen').style.display = 'block';
+            document.getElementById('currentLevel').textContent = `NIVEAU: ${level.toUpperCase()}`;
+            
+            // Démarrer le timer (l'horloge est déclanché lors du début du jeu)
+            startTimer(timeMap[level]);
+            
+            // Jouer le son prédefinis du niveau
+            playSound(levelSounds[level]);
+            
+            showQuestion();
+        }
+
+        function startTimer(duration) {
+            timeLeft = duration;
+            updateTimerDisplay();
+            
+            timer = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Changer la couleur ed l'horloge quand le temps est critique pour indiquer l'etat de l'horloge
+            if (timeLeft <= 50) {
+                timerDisplay.style.background = '#ffb6c1';
+                timerDisplay.style.borderColor = '#dc143c';
+                timerDisplay.style.color = '#8b0000';
+            } else {
+                timerDisplay.style.background = '#fffacd';
+                timerDisplay.style.borderColor = '#ff1493';
+                timerDisplay.style.color = '#ff1493';
+            }
+        }
+
+        function gameOver() {
+            clearInterval(timer);
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('gameOverScreen').style.display = 'block';
+            document.getElementById('gameOverPlayerName').textContent = `OUPS ! nous sommes désolé, ${playerName} !`;
+            document.getElementById('gameOverScore').textContent = currentScore;
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                clearInterval(timer);
+                showResults();
+                return;
+            }
+            
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('currentScore').textContent = currentScore;
+            
+            // Mettre à jour la barre de progression
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
+            // Afficher les différentes options d'une question
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+                button.onclick = () => checkAnswer(index);
+                optionsGrid.appendChild(button);
+            });
+            
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option-btn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Désactiver tous les boutons lorsqu'une réponse est choisie pour une question posée
+            options.forEach(btn => btn.disabled = true);
+            
+            // Marquer la bonne et mauvaise réponse
+            options.forEach((btn, index) => {
+                if (index === question.correct) {
+                    btn.classList.add('correct');
+                } else if (index === selectedIndex && index !== question.correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Ajouter les points si la réponse choisie est correcte
+            if (selectedIndex === question.correct) {
+                currentScore += pointsPerAnswer;
+                document.getElementById('currentScore').textContent = currentScore;
+                playSound('soundCorrect');
+            } else {
+                playSound('soundIncorrect');
+            }
+            
+            nextBtn.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+            
+            document.getElementById('resultsPlayerName').textContent = `Félicitations, ${playerName} !`;
+            document.getElementById('finalScore').textContent = currentScore;
+            
+            const maxScore = questions.length * pointsPerAnswer;
+            const percentage = (currentScore / maxScore) * 100;
+            
+            let message = '';
+            let messageClass = '';
+            let blameMessage = '';
+            
+            // Message de blâme si le score est inférieur ou égale à la moitié des points réservée du niveau
+            if (percentage <= 20) {
+                blameMessage = " Attention ! Votre score est inférieur à la moitié, je dirais meme très critique. La Parole de Dieu mérite plus d'attention ! Lisez davantage votre Bible ! ";
+                document.getElementById('blameMessage').textContent = blameMessage;
+                document.getElementById('blameMessage').style.display = 'block';
+                document.getElementById('resultsMessage').classList.add('encouragement');
+                playSound('soundLose');
+            } else {
+                document.getElementById('blameMessage').style.display = 'none';
+                playSound('soundWin');
+            }
+            
+            // Message principal selon les différents scores
+            if (percentage >= 90) {
+                message = " EXCELLENT ! Vous maîtrisez parfaitement les  écrits de la Parole de Dieu ! Félicitation, C'est épousthouflant, Continuez à lire ! ";
+                messageClass = 'celebration';
+            } else if (percentage >= 70) {
+                message = " TRÈS BON SCORE ! Votre connaissance biblique est solide ! Continuez à lire ! Courage !";
+                messageClass = 'celebration';
+            } else if (percentage >= 50) {
+                message = " BON TRAVAIL ! Vous avez une bonne base biblique. Persévérez et Continuez à lire ! courage ";
+                messageClass = 'encouragement';
+            } else {
+                message = " Tu es apparemment un natif dans la parole hein ? La Parole de Dieu est une mine inépuisable.  Continuez à lire votre bible avec percévérance, Courage! ";
+                messageClass = 'encouragement';
+            }
+            
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('resultsMessage').className = 'results-message ' + messageClass;
+        }
+
+        function restartGame() {
+            clearInterval(timer);
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('gameOverScreen').style.display = 'none';
+            document.getElementById('levelScreen').style.display = 'block';
+        }
+
+        // Fonction pour jouer un son
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound) {
+                sound.currentTime = 0;
+                sound.volume = 0.9;
+                sound.play().catch(e => console.log('Son non joué:', e));
+            }
+        }
+
+        // Fonction utilitaire pour mélanger un tableau
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Permettre la soumission du nom avec la touche Entrée
+        document.getElementById('playerName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                validateName();
+            }
+        });
+    </script>
+</body>
+</html>
